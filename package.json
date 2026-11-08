@@ -1,0 +1,47 @@
+{
+  "name": "mulqi-goal-proof",
+  "version": "0.1.0",
+  "description": "Goal-based planning and proof gating for DeepSeek Harness: turn a request into an outcome contract, execute it without drift, and refuse code changes that ship no verifiable proof package.",
+  "type": "module",
+  "main": "index.js",
+  "bin": {
+    "mulqi-goal-proof": "bin/mulqi-goal-proof.js"
+  },
+  "files": [
+    "index.js",
+    "lib/**",
+    "bin/**",
+    "skills/**",
+    "templates/**",
+    "cordis.patch.yml",
+    "docs/**",
+    "README.md",
+    "LICENSE"
+  ],
+  "license": "MIT",
+  "engines": {
+    "node": "^22.19.0 || >=24.0.0"
+  },
+  "scripts": {
+    "test": "node --test tests/*.test.js"
+  },
+  "keywords": [
+    "deepseek-harness",
+    "dsh",
+    "plugin",
+    "goal",
+    "planning",
+    "proof-gate",
+    "acceptance-evidence",
+    "cutover",
+    "code-review"
+  ],
+  "dsh": {
+    "bundle": {
+      "patch": "cordis.patch.yml"
+    },
+    "engines": {
+      "dsh": "0.2.1-rc.2"
+    }
+  }
+}

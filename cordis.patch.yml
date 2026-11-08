@@ -1,0 +1,9 @@
+# Mulqi Goal Proof — DSH bundle patch layer.
+#
+# Mounts the proof gate into every profile that lists this package in
+# dsh.profile.bundles. The row's `name` is this package; the host loader
+# resolves it from the profile's node_modules. No configuration surface is
+# exposed: the gate's defaults are documented in docs/gate.md.
+- insert:
+    - id: mulqi-gp
+      name: mulqi-goal-proof
