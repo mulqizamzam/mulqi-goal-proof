@@ -1,6 +1,6 @@
 {
   "name": "mulqi-goal-proof",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Goal-based planning and proof gating for DeepSeek Harness: turn a request into an outcome contract, execute it without drift, and refuse code changes that ship no verifiable proof package.",
   "type": "module",
   "main": "index.js",
@@ -16,6 +16,7 @@
     "cordis.patch.yml",
     "docs/**",
     "README.md",
+    "SECURITY.md",
     "LICENSE"
   ],
   "license": "MIT",

@@ -9,6 +9,42 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 Nothing yet.
 
+## [0.1.1] — 2026-11-09
+
+Security and correctness pass from an adversarial review of 0.1.0.
+
+### Fixed
+
+- **Code detection was too narrow.** Widely used languages that were silently
+  treated as documentation are now product code: `.lua`, `.dart`, `.vue`,
+  `.svelte`, `.zig`, `.ex`, `.exs`, `.scala`. A change confined to those files
+  previously passed the gate with no goal package.
+- **Nested goal packages were misresolved.** A package at
+  `docs/goals/<team>/<slug>/` was read as the team directory, so a complete
+  package still failed. The package directory is now the directory that
+  directly holds the package files. An incomplete set now reports per file
+  instead of a misleading "missing PLAN.md".
+- **Unclear error outside a repository.** Running the gate in a directory that
+  is not a git worktree surfaced raw git stderr. It now reports
+  `Not a git repository: <path>` and keeps exit code `2`.
+
+### Added
+
+- `SECURITY.md` stating what the gate guarantees, what it cannot, and how to
+  use it without over-trusting it — including the fact that the checks are
+  text-presence rather than truth.
+- Nine regression tests locking the three fixes above.
+
+### Changed
+
+- README now lists the covered languages and points readers at the limits
+  section before trusting a verdict.
+
+### Known limitations (unchanged)
+
+- Text-presence checks can be satisfied by placeholder content.
+- A language not in the extension list is not gated.
+
 ## [0.1.0] — 2026-11-08
 
 First public release.
@@ -50,5 +86,6 @@ First public release.
 - Pinned to DSH `0.2.1-rc.2` exactly. A host bump requires an exemption or a
   repackaged release.
 
-[Unreleased]: https://github.com/mulqizamzam/mulqi-goal-proof/compare/v0.1.0...HEAD
+[Unreleased]: https://github.com/mulqizamzam/mulqi-goal-proof/compare/v0.1.1...HEAD
+[0.1.1]: https://github.com/mulqizamzam/mulqi-goal-proof/releases/tag/v0.1.1
 [0.1.0]: https://github.com/mulqizamzam/mulqi-goal-proof/releases/tag/v0.1.0

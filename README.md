@@ -88,6 +88,16 @@ Documentation never needs a package. Any path under `docs/` is documentation,
 including a `.py` file sitting there. Everything else that looks like code — by
 extension or by known filename such as `Dockerfile` or `package.json` — does.
 
+The extension list covers C, C++, C#, Dart, Elixir, Go, Java/Kotlin,
+JavaScript/TypeScript, Lua, PHP, Python, Ruby, Rust, Scala, Shell, SQL, Swift,
+Svelte, Vue, Zig, plus JSON, TOML, and YAML. A language outside that list is
+**not** gated — check [SECURITY.md](SECURITY.md) before trusting the gate on an
+unfamiliar stack.
+
+These checks confirm that text is present, not that it is true: a one-line or
+comment-only package satisfies them. Read the limits before relying on the
+verdict alone.
+
 ## Exit codes
 
 | Code | Meaning |
