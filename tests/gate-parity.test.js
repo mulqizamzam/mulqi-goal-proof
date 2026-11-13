@@ -11,6 +11,9 @@
 
 import assert from 'node:assert/strict'
 import { test } from 'node:test'
+import fs from 'node:fs'
+import os from 'node:os'
+import path from 'node:path'
 
 import { changedGoalDirs, evaluate, isCodeChange } from '../lib/gate.js'
 
@@ -164,5 +167,48 @@ test('every verdict carries a stable shape', () => {
     assert.ok(Array.isArray(verdict.goalDirs), 'goalDirs is an array')
     assert.ok(Array.isArray(verdict.errors), 'errors is an array')
     assert.equal(verdict.exitCode, verdict.status === 'pass' ? 0 : 1)
+  }
+})
+
+// --- Case 10: real files on disk via temporary directory -----------------
+
+test('parity: valid package written to a temporary directory passes', () => {
+  const tmpRoot = fs.mkdtempSync(path.join(os.tmpdir(), 'mulqi-gate-'))
+  try {
+    const slug = 'tmp-fs-package'
+    const goalDir = `${GOALS}/${slug}`
+    const files = {
+      [`${goalDir}/PLAN.md`]:
+        '# Plan\n\n## Truth Owner\nsrc/app.py\n\n## Cutover\nReplace.\n\n## Evidence Gate\nRun test.\n',
+      [`${goalDir}/GOAL.md`]:
+        '# Goal\n\nPreserve truth owner and cutover. Evidence gate.\n',
+      [`${goalDir}/EVIDENCE.md`]:
+        '# Evidence\n\n## Acceptance Evidence\nproof\n\n## Verification\ncheck\n',
+    }
+
+    // Write every file to the real filesystem.
+    for (const [relativePath, content] of Object.entries(files)) {
+      const abs = path.join(tmpRoot, relativePath)
+      fs.mkdirSync(path.dirname(abs), { recursive: true })
+      fs.writeFileSync(abs, content, 'utf8')
+    }
+
+    // Point readFile at those exact relative paths.
+    const filesOnDisk = {}
+    for (const relativePath of Object.keys(files)) {
+      filesOnDisk[relativePath] = fs.readFileSync(path.join(tmpRoot, relativePath), 'utf8')
+    }
+
+    const verdict = run(
+      ['src/app.py', ...Object.keys(filesOnDisk)],
+      filesOnDisk,
+    )
+    assert.equal(verdict.status, 'pass')
+    assert.equal(verdict.reason, 'validated')
+    assert.equal(verdict.exitCode, 0)
+    assert.match(verdict.message, /Mulqi goal package validated/)
+  } finally {
+    // Remove the temp dir and everything inside it.
+    fs.rmSync(tmpRoot, { recursive: true, force: true })
   }
 })

@@ -7,7 +7,24 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
-Nothing yet.
+### Added
+
+- **`validation: true` and `routed: true` flags** on the `mulqi-goal-plan` and
+  `mulqi-goal-execute` skill frontmatters, so the harness catalogue can
+  discover and dispatch them with proof-gate awareness.
+- **CI workflow** (`.github/workflows/ci.yml`) that runs `npm test` plus the
+  `mulqi-goal-proof --base-ref origin/main` gate on every push and pull
+  request targeting `main`.
+- **Temp-directory parity test** in `tests/gate-parity.test.js` that writes a
+  complete goal package to an `os.tmpdir()` directory, reads it back through
+  the engine's `readFile` contract, asserts `status === 'pass'` and
+  `reason === 'validated'`, and removes the temporary directory in a
+  `finally` block.
+
+### Changed
+
+- Test suite grew from 28 to 29 cases; no behaviour was altered.
+
 
 ## [0.1.1] — 2026-11-09
 

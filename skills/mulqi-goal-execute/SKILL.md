@@ -1,6 +1,8 @@
 ---
 name: mulqi-goal-execute
 description: Use when executing an approved plan, GOAL.md, or implementation plan that already defines intent, ownership, contract, cutover, task boundaries, and acceptance evidence. Use for main-agent execution where drift from ownership, cutover, or proof obligations is the primary risk.
+validation: true
+routed: true
 ---
 
 # Goal Execution

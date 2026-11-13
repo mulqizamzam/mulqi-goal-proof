@@ -1,6 +1,8 @@
 ---
 name: mulqi-goal-plan
 description: Use when a user has a feature request, bugfix, refactor, migration, or architecture change and needs it turned into a goal package before any code is written. Use especially when wrong ownership, duplicate paths, stale contracts, weak evidence, or unclear cutover would make fast agent work dangerous.
+validation: true
+routed: true
 ---
 
 # Goal Planning
